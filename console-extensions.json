@@ -1,5 +1,15 @@
 [
   {
+    "type": "console.perspective",
+    "properties": {
+      "id": "cloud-platform",
+      "name": "Cloud Platform",
+      "icon": { "$codeRef": "perspective.icon" },
+      "landingPageURL": { "$codeRef": "perspective.getLandingPageURL" },
+      "importRedirectURL": { "$codeRef": "perspective.getImportRedirectURL" }
+    }
+  },
+  {
     "type": "console.page/route",
     "properties": {
       "exact": true,
@@ -8,13 +18,96 @@
     }
   },
   {
+    "type": "console.navigation/resource-cluster",
+    "properties": {
+      "perspective": "cloud-platform",
+      "id": "my-projects",
+      "name": "My Projects",
+      "model": {
+        "group": "project.openshift.io",
+        "version": "v1",
+        "kind": "Project"
+      }
+    },
+    "flags": { "required": ["OPENSHIFT"] }
+  },
+  {
     "type": "console.navigation/href",
     "properties": {
-      "id": "example",
-      "name": "%plugin__console-plugin-template~Plugin Example%",
+      "id": "project-details",
+      "name": "Project Details",
       "href": "/example",
-      "perspective": "admin",
-      "section": "home"
+      "perspective": "cloud-platform"
+    }
+  },
+  {
+    "type": "console.navigation/href",
+    "properties": {
+      "id": "topology",
+      "perspective": "cloud-platform",
+      "name": "Topology",
+      "href": "/topology",
+      "namespaced": true,
+      "dataAttributes": {
+        "data-quickstart-id": "qs-nav-topology",
+        "data-test-id": "topology-header"
+      }
+    }
+  },
+  {
+    "type": "console.navigation/href",
+    "properties": {
+      "id": "observe",
+      "perspective": "cloud-platform",
+      "name": "Monitoring",
+      "href": "/dev-monitoring",
+      "namespaced": true,
+      "dataAttributes": {
+        "data-quickstart-id": "qs-nav-monitoring",
+        "data-tour-id": "tour-monitoring-nav",
+        "data-test-id": "monitoring-header"
+      }
+    },
+    "flags": {
+      "required": ["MONITORING"]
+    }
+  },
+  {
+    "type": "console.navigation/href",
+    "properties": {
+      "perspective": "cloud-platform",
+      "id": "search",
+      "name": "Search",
+      "href": "/search",
+      "namespaced": true
+    }
+  },
+  {
+    "type": "console.navigation/separator",
+    "properties": {
+      "perspective": "cloud-platform",
+      "id": "helm-separator",
+      "insertBefore": "helm"
+    }
+  },
+  {
+    "type": "console.navigation/href",
+    "properties": {
+      "id": "helm",
+      "perspective": "cloud-platform",
+      "name": "Helm",
+      "href": "/helm",
+      "namespaced": true,
+      "dataAttributes": {
+        "data-quickstart-id": "qs-nav-helm",
+        "data-test-id": "helm-releases-header"
+      }
+    }
+  },
+  {
+    "type": "console.create-project-modal",
+    "properties": {
+      "component": { "$codeRef": "CreateProjectModal" }
     }
   }
 ]
